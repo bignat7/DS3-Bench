@@ -163,7 +163,6 @@
 
 </head>
 <body>
-<img src="images/Map-Draft.png">
     <br>
         <h1>
             Write a message of care and contemplation to other benchgoers below...
@@ -214,7 +213,8 @@
         </div>
     </div>
     <br>
-    <button class="send" onclick="cloneDiv()">Send Message</button>
+    <button class="send" id="messageButton" onclick="toggleText()">Send Message</button>
+    <!-- onclick="cloneDiv()" -->
   <br>
   <br>
   <div id="screenshots">
@@ -226,6 +226,10 @@
 
   <script>
    
+   function toggleText() {
+    const button = document.getElementById("messageButton");
+    button.textContent = button.textContent === "Send Message" ? "Sent!" : "Send Message";
+  }
     
     // Load saved clones from localStorage on page load
     window.addEventListener("load", () => {
