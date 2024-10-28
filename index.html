@@ -216,26 +216,72 @@
     <br>
     <button class="send" onclick="cloneDiv()">Send Message</button>
   <br>
-  <br>
   <div id="screenshots">
     <!-- Cloned divs will be appended here -->
   </div>
 
+  <button hidden id="clearButton" onclick="clearAllClones()">Clear All</button>
+
 
 
   <script>
-   function cloneDiv() {
+// Load saved clones from localStorage on page load
+window.addEventListener("load", () => {
+      const savedClones = JSON.parse(localStorage.getItem("clones")) || [];
+      const screenshots = document.getElementById("screenshots");
+      savedClones.forEach(cloneData => {
+        const cloneElement = document.createElement("div");
+        cloneElement.classList.add("cloned-div");
+        cloneElement.innerHTML = cloneData.content;
+
+        // Restore textarea content
+        cloneElement.querySelectorAll("textarea, input").forEach((element, index) => {
+          if (cloneData.values[index] !== undefined) {
+            element.value = cloneData.values[index];
+          }
+        });
+
+        screenshots.prepend(cloneElement);
+      });
+    });
+
+    function cloneDiv() {
       const captureDiv = document.getElementById('captureDiv');
       const clone = captureDiv.cloneNode(true); // Deep clone of the div
 
-      // Remove the editable attribute and make the clone non-interactive
+      // Make the clone non-editable and remove form functionality
       clone.classList.add('cloned-div');
       clone.removeAttribute('contenteditable');
-      clone.setAttribute('contentEditable', "false");
+      clone.querySelectorAll("textarea, input").forEach(element => {
+        element.setAttribute("readonly", true);
+        element.setAttribute("disabled", true);
+      });
 
-      // Prepend the cloned element to the screenshots div
-      const screenshots = document.getElementById('screenshots');
-      screenshots.prepend(clone); // Inserts clone at the top
+      // Save the clone's HTML and form values to localStorage
+      const screenshots = document.getElementById("screenshots");
+      screenshots.prepend(clone); // Insert clone at the top
+
+      // Collect values of form elements for saving
+      const formValues = Array.from(clone.querySelectorAll("textarea, input")).map(
+        element => element.value
+      );
+
+      // Store both HTML and form values
+      const cloneData = {
+        content: clone.innerHTML,
+        values: formValues
+      };
+      const allClones = JSON.parse(localStorage.getItem("clones")) || [];
+      allClones.push(cloneData);
+      localStorage.setItem("clones", JSON.stringify(allClones));
+    }
+
+    function clearAllClones() {
+      // Clear the container div
+      document.getElementById("screenshots").innerHTML = "";
+      
+      // Remove the saved data from localStorage
+      localStorage.removeItem("clones");
     }
 
 
