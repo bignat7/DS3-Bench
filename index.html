@@ -37,9 +37,9 @@
 
     textarea {
         margin-top: 20px;
-        padding-bottom: 200px;
+        padding: 20px;
+        min-height: 350px;
         background-color: #aab14c;
-        border: 40px solid #aab14c;
         width: 100%;
         text-align: left;
         color: white;
@@ -288,6 +288,17 @@
   /*if the user clicks anywhere outside the select box,
   then close all select boxes:*/
   document.addEventListener("click", closeAllSelect);
+  
+    const textarea = document.querySelector("textarea");
+
+    function autoGrow() {
+      textarea.style.height = "auto"; // Reset to shrink if needed
+      textarea.style.height = textarea.scrollHeight + "px"; // Set to full content height
+    }
+
+    // Adjust height on each keystroke, both expanding and shrinking
+    textarea.addEventListener("input", autoGrow);
+
   </script>
 
 
