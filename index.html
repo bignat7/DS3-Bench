@@ -216,6 +216,7 @@
     <br>
     <button class="send" onclick="cloneDiv()">Send Message</button>
   <br>
+  <br>
   <div id="screenshots">
     <!-- Cloned divs will be appended here -->
   </div>
@@ -223,10 +224,11 @@
   <button hidden id="clearButton" onclick="clearAllClones()">Clear All</button>
 
 
-
   <script>
-// Load saved clones from localStorage on page load
-window.addEventListener("load", () => {
+   
+    
+    // Load saved clones from localStorage on page load
+    window.addEventListener("load", () => {
       const savedClones = JSON.parse(localStorage.getItem("clones")) || [];
       const screenshots = document.getElementById("screenshots");
       savedClones.forEach(cloneData => {
@@ -234,11 +236,13 @@ window.addEventListener("load", () => {
         cloneElement.classList.add("cloned-div");
         cloneElement.innerHTML = cloneData.content;
 
-        // Restore textarea content
+        // Restore textarea content and styling
         cloneElement.querySelectorAll("textarea, input").forEach((element, index) => {
           if (cloneData.values[index] !== undefined) {
             element.value = cloneData.values[index];
           }
+          element.style.backgroundColor = "white";
+          element.style.color = "black";
         });
 
         screenshots.prepend(cloneElement);
@@ -255,6 +259,8 @@ window.addEventListener("load", () => {
       clone.querySelectorAll("textarea, input").forEach(element => {
         element.setAttribute("readonly", true);
         element.setAttribute("disabled", true);
+        element.style.backgroundColor = "white"; // Change background to white
+        element.style.color = "black"; // Change text color to black
       });
 
       // Save the clone's HTML and form values to localStorage
@@ -276,6 +282,7 @@ window.addEventListener("load", () => {
       localStorage.setItem("clones", JSON.stringify(allClones));
     }
 
+    // Clear all clones and localStorage
     function clearAllClones() {
       // Clear the container div
       document.getElementById("screenshots").innerHTML = "";
