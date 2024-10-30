@@ -65,13 +65,18 @@
             font-family: "IvyStyleTW-Regular";
             src: url("fonts/IvyStyleTW-Regular.woff2");
         }
+
+        @font-face {
+            font-family: "Iowan Regular";
+            src: url("fonts/bitstream-iowan-old-style-bt-586c36a8d7712.ttf");
+        }
     
         h1 {
             text-align: left;
             margin-left: 20px;
             color: white;
             font-size: 4vw;
-            font-family: "IvyStyleTW-Regular", Franklin Gothic Light, sans-serif;
+            font-family: "Iowan Regular", Franklin Gothic Light, sans-serif;
         }
     
         h2 {
@@ -165,7 +170,7 @@
 <body>
     <br>
         <h1>
-            Write a message of care and contemplation to other benchgoers below...
+            Write a message to other benchgoers below...
         </h1>
     <div class="capture-area" id="captureDiv">
         <img src="images/webpage-graphic2.png">
@@ -216,6 +221,7 @@
     <button class="send" id="messageButton" onclick="toggleText()">Send Message</button>
     <!-- onclick="cloneDiv()" -->
   <br>
+
   <div id="screenshots">
     <!-- Cloned divs will be appended here -->
   </div>
